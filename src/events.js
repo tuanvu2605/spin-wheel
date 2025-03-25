@@ -100,6 +100,17 @@ function registerPointerEvents(wheel = {}) {
       canvas.removeEventListener('pointerup', onPointerUp);
       canvas.removeEventListener('pointercancel', onPointerUp);
       canvas.removeEventListener('pointerout', onPointerUp);
+
+      const clickPoint = {x: e.clientX, y: e.clientY};
+      if (typeof wheel.getItemIndexAtPoint === 'function') {
+        const index = wheel.getItemIndexAtPoint(clickPoint);
+        if (index !== -1) {
+          if (typeof wheel.onItemClick === 'function') {
+            wheel.onItemClick(index);
+          }
+        }
+      }
+
       wheel.dragEnd();
     }
 

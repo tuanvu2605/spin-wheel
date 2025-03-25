@@ -238,6 +238,16 @@ export class Wheel {
 
   }
 
+  getItemIndexAtPoint(point = {x: 0, y: 0}) {
+    const p = util.translateXYToElement(point, this.canvas, this.getActualPixelRatio());
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].path && this._context.isPointInPath(this.items[i].path, p.x, p.y)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   drawItemImages(ctx, angles = []) {
 
     for (const [i, a] of angles.entries()) {
